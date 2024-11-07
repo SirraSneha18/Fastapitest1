@@ -49,6 +49,14 @@ jobs:
       id-token: write # This is required for requesting the JWT
 
     steps:
+      # Azure login step - this is mandatory for authentication to Azure
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D324C9DBD615487082E9B8DE7CC560A4 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_612D6954C4A24249AC7E57CBAA515F50 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5C58B144264F4F28BB719DB2199280E6 }}
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
@@ -64,6 +72,6 @@ jobs:
           app-name: 'FastAPItest'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}  # Use the publish profile from secrets
-          # Set environment variable to disable Oryx
-          configuration-settings: |
-            DO_NOT_USE_ORYX=true
+          
+      # If you want to disable Oryx, you can do it using Azure App Service configuration settings via the Azure Portal.
+      # Set an environment variable DO_NOT_USE_ORYX via Configuration in the Azure portal or include it in your app settings.
