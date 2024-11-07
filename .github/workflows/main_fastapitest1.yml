@@ -1,3 +1,7 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
+
 name: Build and deploy Python app to Azure Web App - fastapitest1
 
 on:
@@ -46,7 +50,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -57,16 +61,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E7EF70D2148D44A987960586B662A962 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7CF0125DDB264835A2A87F359E583BAE }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E3749E1D69444FF1A8C41E6B04F4BBEF }}
-
-      - name: Disable Oryx build during deployment
-        run: |
-          az webapp config appsettings set --name 'fastapitest1' --resource-group 'v-sirrasneha-mindtree' --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1A3F8713A47E4F0EA1E287217B0D85CF }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A560E7B2974246709F110E98F4D06EB7 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7CCE87612D71423393180C394835D322 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -74,4 +75,4 @@ jobs:
         with:
           app-name: 'fastapitest1'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}  # Use the publish profile from secrets
+          
