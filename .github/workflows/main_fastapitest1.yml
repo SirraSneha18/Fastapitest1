@@ -69,6 +69,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7CF0125DDB264835A2A87F359E583BAE }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E3749E1D69444FF1A8C41E6B04F4BBEF }}
 
+        # New step to disable Oryx build during deployment
+      - name: Disable Oryx build during deployment
+        run: |
+          az webapp config appsettings set --name 'fastapitest1' --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
