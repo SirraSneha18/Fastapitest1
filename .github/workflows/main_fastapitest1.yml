@@ -25,7 +25,7 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -57,7 +57,7 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      # Skip the azure/login step and directly deploy using the publish profile
+      # Deploy to Azure Web App using publish profile
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
@@ -65,7 +65,7 @@ jobs:
           app-name: 'fastapitest1'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}  # Ensure this secret is set with your publish profile content
-          
+
       # Optional: Step to disable Oryx build during deployment
       - name: Disable Oryx build during deployment
         run: |
